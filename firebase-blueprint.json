@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "Journal Entry",
+      "description": "A private journal entry containing reflections, conversations with Gemini, and summaries.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the journal entry document",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "The UID of the authenticated owner",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or primary reflection subject",
+          "maxLength": 200
+        },
+        "summary": {
+          "type": "string",
+          "description": "Gemini-generated summary and reflection analysis",
+          "maxLength": 4000
+        },
+        "messages": {
+          "type": "array",
+          "description": "Multi-turn exchange of prompts and Gemini responses"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional category tags or reflection keywords"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last update"
+        }
+      },
+      "required": ["id", "userId", "title", "messages", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/entries/{entryId}": {
+      "schema": "JournalEntry",
+      "description": "Private journal entries isolated strictly to the authenticated user owning the path"
+    }
+  }
+}
